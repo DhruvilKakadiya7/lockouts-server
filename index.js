@@ -50,7 +50,7 @@ export const sleep = (ms) => {
     });
 }
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, "0.0.0.0",() => {
     console.log(`Server is started on port ${PORT}.`);
 });
 
