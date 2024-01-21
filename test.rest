@@ -1,0 +1,50 @@
+POST http://localhost:5000/duels/add
+Content-Type: application/json
+
+{
+  "players": [
+    {
+      "handle": "test2",
+      "uid": "hfisodnlaoiefndkmsl"
+    }
+  ],
+  "ratingMin": 800,
+  "ratingMax": 900,
+  "problemCount": 5,
+  "timeLimit": 10
+}
+
+###
+
+GET http://localhost:5000/duels/checkUserInDuel/hfisodnlaoiefndkmsl
+
+###
+
+GET http://localhost:5000/duels/getById/6586c7b38163484979553fbe
+###
+
+###
+
+GET http://localhost:5000/duels/activeLRU
+
+###
+
+DELETE http://localhost:5000/duels/ 
+
+###
+
+POST http://localhost:5000/mail/ 
+Content-Type: application/json
+
+{
+  "players": [
+    {
+      "handle": "test2",
+      "uid": "hfisodnlaoiefndkmsl"
+    }
+  ],
+  "ratingMin": 800,
+  "ratingMax": 900,
+  "problemCount": 5,
+  "timeLimit": 10
+}
