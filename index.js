@@ -10,11 +10,12 @@ import e from 'express';
 import { ObjectId } from "mongodb";
 import problemRouter from './routes/problemRouter.js';
 import mailRouter from './routes/mailRouter.js';
+import http from 'http'
 // import socket from '../client/src/socket.js';
 import dotenv from 'dotenv';
 dotenv.config();
 const app = express();
-
+const server = http.createServer(app);
 const allowedOrigins = '*';
 
 var corsOptions = {
@@ -50,9 +51,7 @@ export const sleep = (ms) => {
     });
 }
 
-const server = app.listen(PORT, "0.0.0.0",() => {
-    console.log(`Server is started on port ${PORT}.`);
-});
+
 
 const io = new Server(
     server
@@ -226,3 +225,7 @@ io.on('connection', (socket) => {
         socket.leave();
     });
 })
+
+server.listen(PORT, "0.0.0.0",() => {
+    console.log(`Server is started on port ${PORT}.`);
+});
