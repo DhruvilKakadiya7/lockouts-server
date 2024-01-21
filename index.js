@@ -55,10 +55,7 @@ const server = app.listen(PORT, "0.0.0.0",() => {
 });
 
 const io = new Server(
-    server,
-    cors({
-        origin: allowedOrigins,
-    })
+    server
 );
 
 async function getTimeLeft(
