@@ -11,7 +11,7 @@ const options = {
     maxSize: 50000000,
     sizeCalculation: (value, key) => {
         return 1
-      },
+    },
 }
 
 const cache = new LRUCache(options)
@@ -31,15 +31,15 @@ class taskManager {
             cachedProblems = allProblems;
         }
     }
-    static async selectProblems(allProblems, difficulties, problemCount) {
+    static async selectProblems(allProblems, selectedDiffs, problemCount) {
         let result = [];
-        for (let i = 0; i < difficulties.length; i++) {
+        for (let i = 0; i < selectedDiffs.length; i++) {
             const problems = allProblems.filter(
-                (problem) => problem.difficulty === difficulties[i]
+                (problem) => problem.difficulty === selectedDiffs[i]
             );
-            let idx = Math.floor(Math.random() * (problems.length - 1));
+            let idx = Math.abs(Math.floor(Math.random() * (problems.length - 1)));
             let temp = problems[idx];
-            temp['difficulty'] = difficulties[i] + (250 * i);
+            temp['difficulty'] = selectedDiffs[i] + (250 * i);
             // console.log(temp);
             result.push(temp);
             if (result.length === problemCount) {
@@ -66,12 +66,40 @@ class taskManager {
         // console.log(cachedProblems.length);
         let low = duel.ratingMin;
         let high = duel.ratingMax;
-        let d = (high - low) / duel.problemCount;
         let difficulties = [];
-        for (let i = low; i <= high; i += d) {
-            difficulties.push(Math.floor(i / 100) * 100);
+        for (let i = low; i <= high; i += 100) {
+            difficulties.push(i);
         }
-        return this.selectProblems(cachedProblems, difficulties, duel.problemCount);
+        let diff = Math.floor(difficulties.length / duel.problemCount);
+        let currIdx = 0;
+        let selectedDiffs = [];
+        console.log(diff);
+        if (diff === 0) {
+            for (let i = 0; i < duel.problemCount; i++) {
+                const randomIndex = Math.floor(Math.random() * (difficulties.length - 1));
+                selectedDiffs.push(difficulties[randomIndex]);
+            }
+            selectedDiffs.sort();
+        }
+        else {
+            for (let i = 0; i < duel.problemCount; i++) {
+                let endIdx = currIdx + diff - 1;
+                console.log(currIdx, endIdx);
+                if (i == duel.problemCount - 1) {
+                    endIdx = difficulties.length - 1;
+                }
+                let temp = [];
+                for (let j = currIdx; j <= endIdx; j++) {
+                    temp.push(difficulties[j]);
+                }
+                const randomIndex = Math.floor(Math.random() * (temp.length - 1));
+                selectedDiffs.push(temp[randomIndex]);
+                currIdx = endIdx + 1;
+            }
+        }
+
+        console.log(selectedDiffs);
+        return this.selectProblems(cachedProblems, selectedDiffs, duel.problemCount);
     }
 }
 

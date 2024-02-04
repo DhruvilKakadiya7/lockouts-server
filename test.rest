@@ -9,7 +9,7 @@ Content-Type: application/json
     }
   ],
   "ratingMin": 800,
-  "ratingMax": 900,
+  "ratingMax": 1100,
   "problemCount": 5,
   "timeLimit": 10
 }
