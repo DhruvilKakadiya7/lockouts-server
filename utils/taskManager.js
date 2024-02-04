@@ -74,7 +74,7 @@ class taskManager {
         let currIdx = 0;
         let selectedDiffs = [];
         console.log(diff);
-        if (diff === 0) {
+        if (diff === 0 || duel.problemCount === 1) {
             for (let i = 0; i < duel.problemCount; i++) {
                 const randomIndex = Math.floor(Math.random() * (difficulties.length - 1));
                 selectedDiffs.push(difficulties[randomIndex]);
